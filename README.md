@@ -6,7 +6,8 @@ built as a **portal-native pop-up engagement module** — it opens as an overlay
 top of the YoNumbers portal (no hard navigation), drops the user into a joyful,
 gamified mini-game, and returns them exactly where they were.
 
-> **Live:** _add your Vercel URL here after deploy_ → `https://<project>.vercel.app`
+> **Live:** **https://yonumbers-pickacard.vercel.app**
+> **Repo:** https://github.com/vhurudzaicomfort-byte/yonumbers-pickacard
 
 ## Screens
 
