@@ -34,18 +34,19 @@ export function PortalChrome({
         style={{ background: "radial-gradient(120% 90% at 50% 0%, #eef0fb 0%, #e7e9f7 45%, #dfe1f3 100%)" }}
       />
       <div className="bg-grad-navy-foot">
-        <header className="sticky top-0 z-[600] flex items-center justify-between gap-3 bg-surface/90 px-4 py-3 backdrop-blur safe-t">
-          <div className="flex items-center gap-2">
-            <Logo variant="navy" className="w-9" />
-            <h1 className="font-display text-xl font-extrabold text-navy-700">{title}</h1>
+        <header className="sticky top-0 z-[600] flex h-16 items-center justify-between gap-4 bg-surface/90 px-4 backdrop-blur safe-t">
+          <div className="flex min-w-0 items-center gap-2">
+            <Logo variant="navy" className="w-8 shrink-0" priority />
+            <h1 className="truncate font-display text-[22px] font-extrabold leading-none text-navy-700">{title}</h1>
           </div>
           <motion.button
             whileTap={{ scale: 0.96 }}
             onClick={() => setMenuOpen(true)}
-            className="flex items-center gap-2 rounded-pill border-2 border-navy-700/15 px-4 py-1.5 font-display font-bold text-navy-700"
+            className="flex h-10 shrink-0 items-center gap-2 rounded-pill border-2 border-navy-700/15 px-4 text-sm font-display font-bold text-navy-700"
             aria-label="Open menu"
           >
-            <MenuIcon className="h-5 w-5" /> Menu
+            <MenuIcon className="h-[18px] w-[18px]" />
+            <span className="leading-none">Menu</span>
           </motion.button>
         </header>
 

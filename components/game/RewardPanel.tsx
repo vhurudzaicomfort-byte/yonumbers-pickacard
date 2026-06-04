@@ -48,25 +48,27 @@ export function RewardPanel({
       role="alertdialog"
       aria-label={win ? "Congratulations" : "Try again"}
     >
-      {/* stars peeking above the ribbon */}
-      <div className="absolute -top-6 left-1/2 z-20 flex -translate-x-1/2 gap-1.5">
+      {/* Decorative stars: a symmetric crest sitting BEHIND the ribbon (z-0).
+          They peek above the banner but never cover the message — the text
+          always renders on solid colour, so contrast stays WCAG-safe. */}
+      <div className="pointer-events-none absolute inset-x-0 -top-7 z-0 flex items-end justify-center gap-3">
         {[0, 1, 2].map((i) => (
           <motion.span
             key={i}
-            initial={{ scale: 0, rotate: -30 }}
-            animate={{ scale: i === 1 ? 1.3 : 1, rotate: 0, y: i === 1 ? -6 : 0 }}
-            transition={{ delay: 0.15 + i * 0.12, type: "spring", stiffness: 500, damping: 14 }}
+            initial={{ scale: 0, y: 8 }}
+            animate={{ scale: i === 1 ? 1 : 0.62, y: i === 1 ? -6 : 0 }}
+            transition={{ delay: 0.12 + i * 0.1, type: "spring", stiffness: 460, damping: 15 }}
           >
-            <Star className="h-11 w-11 drop-shadow" tone={win ? "gold" : "muted"} />
+            <Star className={cn("drop-shadow-sm", i === 1 ? "h-10 w-10" : "h-6 w-6")} tone={win ? "gold" : "muted"} />
           </motion.span>
         ))}
       </div>
 
-      {/* CSS ribbon banner */}
+      {/* CSS ribbon banner — sits above the stars (z-10) so the message stays dominant */}
       <div className="relative z-10 mx-auto -mb-3 w-[108%] -translate-x-[4%]">
         <div
           className={cn(
-            "relative py-2 text-center font-display text-sm font-extrabold uppercase tracking-wide text-white shadow-md",
+            "relative py-2.5 text-center font-display text-[15px] font-extrabold uppercase tracking-wider text-white shadow-md",
             win ? "bg-navy-700" : "bg-brand-red",
           )}
           style={{ clipPath: "polygon(4% 0, 96% 0, 100% 50%, 96% 100%, 4% 100%, 0 50%)" }}
