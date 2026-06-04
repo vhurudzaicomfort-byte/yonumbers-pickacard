@@ -11,7 +11,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-/** SELECT PACKAGE header + single-select option pills. */
+/** SELECT PACKAGE header + single-select option pills (Core theme). */
 export function PackageSelector({
   value,
   onChange,
@@ -21,7 +21,7 @@ export function PackageSelector({
 }) {
   return (
     <div className="flex w-full flex-col gap-2.5">
-      <div className="rounded-pill bg-gradient-to-b from-[#7fdcff] to-[#34b7f0] py-2.5 text-center font-display font-extrabold uppercase tracking-wide text-white shadow-soft">
+      <div className="rounded-pill bg-navy-700 py-2.5 text-center font-display font-bold uppercase tracking-wide text-white">
         Select Package
       </div>
       {PACKAGES.map((p) => {
@@ -33,10 +33,10 @@ export function PackageSelector({
             onClick={() => onChange(p.id)}
             aria-pressed={selected}
             className={cn(
-              "flex items-center justify-center gap-2 rounded-pill py-2.5 px-4 font-display font-bold uppercase tracking-wide transition-colors",
+              "flex items-center justify-center gap-2 rounded-pill border-2 py-2.5 px-4 font-body font-bold transition-colors",
               selected
-                ? "bg-grad-green text-white border-[3px] border-white shadow-soft"
-                : "bg-white/95 text-violet-600 border-[3px] border-transparent",
+                ? "border-brand-red bg-brand-red/5 text-brand-red"
+                : "border-divider bg-surface-alt text-navy-600 hover:border-navy-700/30",
             )}
           >
             {selected && <CheckIcon />}

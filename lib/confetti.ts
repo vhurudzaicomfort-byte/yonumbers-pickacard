@@ -9,7 +9,7 @@ export function fireConfetti() {
     window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
   )
     return;
-  const colors = ["#FFD217", "#E546FF", "#67EB00", "#FF60D2", "#7654FD"];
+  const colors = ["#2B368A", "#E92230", "#FFD217", "#FFFFFF", "#48529A"];
   const shoot = (particleRatio: number, opts: confetti.Options) =>
     confetti({
       origin: { y: 0.55 },

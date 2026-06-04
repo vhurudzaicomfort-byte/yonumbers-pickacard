@@ -35,7 +35,7 @@ export function FreeGamesCarousel() {
             <div className="absolute inset-x-0 bottom-0 p-3 text-white">
               <p className="font-display text-lg font-extrabold leading-none">{g.title}</p>
               <p className="text-xs font-semibold text-white/85">{g.sub}</p>
-              <Button variant="flat-red" size="sm" className="mt-2 h-9 px-4 text-xs">
+              <Button variant="red" size="sm" className="mt-2 h-9 px-4 text-xs">
                 Play Now
               </Button>
             </div>

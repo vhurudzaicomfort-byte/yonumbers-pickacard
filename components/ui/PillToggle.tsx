@@ -5,8 +5,8 @@ import { cn } from "@/lib/cn";
 import type { AuthMode } from "@/lib/types";
 
 /**
- * Segmented SUBSCRIBE | LOGIN toggle with an animated sliding indicator.
- * Active half fills green (subscribe) or gold (login) per the game design.
+ * Core-theme Login | Subscribe tabs with an animated red underline
+ * (matches the original YoNumbers Login/Subscribe screen).
  */
 export function PillToggle({
   value,
@@ -15,16 +15,12 @@ export function PillToggle({
   value: AuthMode;
   onChange: (m: AuthMode) => void;
 }) {
-  const items: { id: AuthMode; label: string; active: string }[] = [
-    { id: "subscribe", label: "SUBSCRIBE", active: "bg-grad-green" },
-    { id: "login", label: "LOGIN", active: "bg-grad-gold" },
+  const items: { id: AuthMode; label: string }[] = [
+    { id: "login", label: "Login" },
+    { id: "subscribe", label: "Subscribe" },
   ];
   return (
-    <div
-      role="tablist"
-      aria-label="Account mode"
-      className="relative flex w-full rounded-pill border-[3px] border-white bg-violet-700/80 p-1 shadow-soft"
-    >
+    <div role="tablist" aria-label="Account mode" className="flex w-full">
       {items.map((it) => {
         const selected = value === it.id;
         return (
@@ -33,23 +29,24 @@ export function PillToggle({
             role="tab"
             aria-selected={selected}
             onClick={() => onChange(it.id)}
-            className="relative flex-1 rounded-pill py-2.5 text-center"
+            className="relative flex-1 pb-2 pt-1 text-center"
           >
-            {selected && (
-              <motion.span
-                layoutId="pill-toggle-active"
-                transition={{ type: "spring", stiffness: 500, damping: 34 }}
-                className={cn("absolute inset-0 rounded-pill", it.active)}
-              />
-            )}
             <span
               className={cn(
-                "relative z-10 font-display font-extrabold uppercase tracking-wide",
-                selected ? "text-white drop-shadow-[0_1px_0_rgba(0,0,0,.2)]" : "text-white/85",
+                "font-display text-lg transition-colors",
+                selected ? "font-extrabold text-navy-700" : "font-semibold text-navy-500/70",
               )}
             >
               {it.label}
             </span>
+            <span className="absolute inset-x-0 bottom-0 h-[3px] rounded-pill bg-divider" />
+            {selected && (
+              <motion.span
+                layoutId="auth-tab-underline"
+                transition={{ type: "spring", stiffness: 500, damping: 34 }}
+                className="absolute inset-x-0 bottom-0 h-[3px] rounded-pill bg-brand-red"
+              />
+            )}
           </button>
         );
       })}

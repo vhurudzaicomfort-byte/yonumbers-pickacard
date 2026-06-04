@@ -1,42 +1,55 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { useSound } from "@/lib/useSound";
 
-type Glyph = "refresh" | "home" | "menu";
+const RefreshIcon = (p: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={p.className} fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12a9 9 0 1 1-2.64-6.36M21 4v5h-5" />
+  </svg>
+);
+const HomeIcon = (p: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={p.className} fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 10.5 12 3l9 7.5M5 9.5V21h14V9.5" />
+  </svg>
+);
+const MenuIcon = (p: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={p.className} fill="none" stroke="currentColor" strokeWidth={2.6} strokeLinecap="round">
+    <path d="M5 7h14M5 12h14M5 17h14" />
+  </svg>
+);
 
-const SRC: Record<Glyph, string> = {
-  refresh: "/brand/glyph-refresh.png",
-  home: "/brand/glyph-home.png",
-  menu: "/brand/glyph-menu.png",
-};
-
-function GlyphButton({
-  glyph,
+function CircleButton({
   label,
   big,
+  variant,
   onClick,
+  children,
 }: {
-  glyph: Glyph;
   label: string;
   big?: boolean;
+  variant: "navy" | "red";
   onClick?: () => void;
+  children: React.ReactNode;
 }) {
   const play = useSound();
   return (
     <motion.button
-      whileTap={{ scale: 0.88, y: 3 }}
+      whileTap={{ scale: 0.9, y: 2 }}
       whileHover={{ y: -2 }}
       onClick={() => {
         play("press");
         onClick?.();
       }}
       aria-label={label}
-      className={cn("relative", big ? "h-[84px] w-[84px] -mt-6" : "h-16 w-16")}
+      className={cn(
+        "grid place-items-center rounded-pill text-white ring-4 ring-white shadow-soft",
+        big ? "h-[72px] w-[72px] -mt-5" : "h-14 w-14",
+        variant === "red" ? "bg-brand-red" : "bg-navy-700",
+      )}
     >
-      <Image src={SRC[glyph]} alt="" aria-hidden fill sizes="84px" className="object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,.22)]" />
+      {children}
     </motion.button>
   );
 }
@@ -52,10 +65,16 @@ export function ActionBar({
   onMenu?: () => void;
 }) {
   return (
-    <nav className="flex items-end justify-center gap-12 pt-2">
-      <GlyphButton glyph="refresh" label="Replay" onClick={onReplay} />
-      <GlyphButton glyph="home" label="Home" big onClick={onHome} />
-      <GlyphButton glyph="menu" label="Menu" onClick={onMenu} />
+    <nav className="flex items-end justify-center gap-10 pt-2">
+      <CircleButton label="Replay" variant="navy" onClick={onReplay}>
+        <RefreshIcon className="h-6 w-6" />
+      </CircleButton>
+      <CircleButton label="Home" variant="red" big onClick={onHome}>
+        <HomeIcon className="h-8 w-8" />
+      </CircleButton>
+      <CircleButton label="Menu" variant="navy" onClick={onMenu}>
+        <MenuIcon className="h-6 w-6" />
+      </CircleButton>
     </nav>
   );
 }

@@ -2,13 +2,14 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { Coin } from "@/components/brand/Coin";
 import { cn } from "@/lib/cn";
 
 export type CardState = "idle" | "flipping" | "won" | "lost";
 
 /**
- * Core game tile: a chest on a lavender panel that flips in 3D to reveal its
- * reward face. Keyboard-operable (Enter/Space) and reduced-motion aware.
+ * Branded playing card: a navy YoNumbers card back that flips in 3D to reveal
+ * its reward face. Core theme — no purple/gold chests. Keyboard-operable.
  */
 export function TreasureCard({
   index,
@@ -33,58 +34,48 @@ export function TreasureCard({
       disabled={disabled}
       onClick={() => onPick(index)}
       onMouseEnter={onHover}
-      aria-label={`Treasure card ${index + 1}`}
-      className={cn(
-        "group relative aspect-square w-full rounded-tile [perspective:900px] outline-none",
-        "focus-visible:ring-4 focus-visible:ring-magenta-400/60 rounded-tile",
-        disabled && state === "idle" && "opacity-100",
-      )}
+      aria-label={`Card ${index + 1}`}
+      className="group relative aspect-[3/4] w-full rounded-tile outline-none [perspective:900px] focus-visible:ring-4 focus-visible:ring-navy-700/40"
     >
       <motion.div
         className="relative h-full w-full [transform-style:preserve-3d]"
         animate={{ rotateY: flipped ? 180 : 0 }}
         transition={reduced ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 24 }}
       >
-        {/* FRONT — closed chest on lavender tile */}
-        <span
-          className="absolute inset-0 flex items-center justify-center rounded-tile bg-[var(--tile-lavender)] [backface-visibility:hidden] shadow-[inset_0_-3px_6px_rgba(74,48,170,.08)]"
-        >
+        {/* FRONT — navy card back with the YoNumbers mark */}
+        <span className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-tile bg-grad-navy-card p-2 shadow-[0_6px_14px_rgba(43,54,138,.28)] ring-2 ring-white/15 [backface-visibility:hidden]">
+          <span
+            aria-hidden
+            className="absolute inset-0 opacity-[0.12]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(45deg, #fff 0 2px, transparent 2px 10px)",
+            }}
+          />
           <motion.span
-            className="relative block h-[78%] w-[78%]"
-            animate={reduced || disabled ? {} : { y: [0, -4, 0] }}
+            className="relative block h-[62%] w-[62%]"
+            animate={reduced || disabled ? {} : { y: [0, -3, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: (index % 4) * 0.25 }}
           >
-            <Image src="/brand/chest.png" alt="" aria-hidden fill sizes="100px" className="object-contain drop-shadow-[0_6px_6px_rgba(74,48,170,.25)] transition-transform duration-200 group-hover:scale-105" />
+            <Image src="/brand/logo-yonumbers-white.png" alt="" aria-hidden fill sizes="90px" className="object-contain transition-transform duration-200 group-hover:scale-105" />
           </motion.span>
-          <span className="pointer-events-none absolute inset-0 rounded-tile opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:shadow-[0_0_0_3px_rgba(229,70,255,.5)]" />
+          <span className="pointer-events-none absolute inset-0 rounded-tile opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-hover:shadow-[0_0_0_3px_rgba(233,34,48,.55)]" />
         </span>
 
         {/* BACK — reward reveal face */}
         <span
           className={cn(
-            "absolute inset-0 flex items-center justify-center rounded-tile [backface-visibility:hidden] [transform:rotateY(180deg)] overflow-hidden",
-            isWin ? "bg-[var(--chest-purple)]" : "bg-violet-700",
+            "absolute inset-0 flex flex-col items-center justify-center gap-1 overflow-hidden rounded-tile [backface-visibility:hidden] [transform:rotateY(180deg)]",
+            isWin ? "bg-white ring-2 ring-brand-red/30" : "bg-surface-alt ring-2 ring-divider",
           )}
         >
-          {/* sunburst behind reward */}
-          <span
-            aria-hidden
-            className="absolute inset-[-30%] opacity-60 animate-sunburst"
-            style={{
-              background:
-                "repeating-conic-gradient(from 0deg, rgba(255,255,255,.18) 0deg 12deg, transparent 12deg 24deg)",
-            }}
-          />
-          <span className="relative block h-[70%] w-[70%]">
-            <Image
-              src={isWin ? "/brand/reward-key.png" : "/brand/chest.png"}
-              alt=""
-              aria-hidden
-              fill
-              sizes="100px"
-              className={cn("object-contain", !isWin && "opacity-50 grayscale")}
-            />
-          </span>
+          {isWin ? (
+            <Coin className="h-1/2 w-1/2" />
+          ) : (
+            <svg viewBox="0 0 24 24" className="h-1/3 w-1/3 text-ink/50" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          )}
         </span>
       </motion.div>
     </button>

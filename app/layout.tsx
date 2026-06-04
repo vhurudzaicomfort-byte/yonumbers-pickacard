@@ -1,19 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Baloo_2, Nunito } from "next/font/google";
+import { Nunito, Poppins } from "next/font/google";
 import "./globals.css";
 import { PickACardProvider } from "@/components/pickacard/PickACardProvider";
-
-const display = Baloo_2({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-display",
-  display: "swap",
-});
 
 const body = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800", "900"],
   variable: "--font-body",
+  display: "swap",
+});
+
+const display = Poppins({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -38,7 +38,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${display.variable} ${body.variable} font-body`}>
+      <body className={`${body.variable} ${display.variable} font-body`}>
         <PickACardProvider>{children}</PickACardProvider>
       </body>
     </html>

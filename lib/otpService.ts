@@ -23,12 +23,9 @@ export function sendOtp(phone: string): Promise<SentOtp> {
   });
 }
 
-export function verifyOtp(code: string, sent: SentOtp | null): Promise<boolean> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (!sent) return resolve(false);
-      const expired = Date.now() > sent.expiresAt;
-      resolve(!expired && code === DEV_OTP);
-    }, 500);
-  });
+// DEMO: accepts ANY number/OTP and succeeds on the first attempt — never
+// block the user. Replace this body with a real gateway check later; the UI
+// (and its error-state handling) stays exactly the same.
+export function verifyOtp(_code: string, _sent: SentOtp | null): Promise<boolean> {
+  return new Promise((resolve) => setTimeout(() => resolve(true), 450));
 }

@@ -4,17 +4,15 @@ import { useRef } from "react";
 import { cn } from "@/lib/cn";
 import { OTP_LENGTH } from "@/lib/otpService";
 
-/** 4-box OTP entry: auto-advance, backspace, paste support, focus glow. */
+/** 4-box OTP entry (Core theme): auto-advance, backspace, paste, focus glow. */
 export function OtpInput({
   value,
   onChange,
   error,
-  tone = "game",
 }: {
   value: string;
   onChange: (v: string) => void;
   error?: boolean;
-  tone?: "game" | "core";
 }) {
   const refs = useRef<Array<HTMLInputElement | null>>([]);
   const digits = value.split("");
@@ -54,12 +52,9 @@ export function OtpInput({
             }
           }}
           className={cn(
-            "h-14 w-12 rounded-input text-center font-display text-2xl font-extrabold outline-none transition-all",
-            "focus:ring-4",
-            tone === "game"
-              ? "bg-white/95 text-violet-700 focus:ring-magenta-400/50"
-              : "bg-surface-alt text-navy-700 border border-black/10 focus:ring-brand-red/30",
-            error && "ring-4 ring-brand-red/50 text-brand-red",
+            "h-16 w-14 rounded-input border-2 bg-surface text-center font-display text-2xl font-extrabold text-navy-700 outline-none transition-all",
+            "border-navy-700/25 focus:border-navy-700 focus:ring-4 focus:ring-navy-700/15",
+            error && "border-brand-red text-brand-red ring-4 ring-brand-red/20",
           )}
         />
       ))}

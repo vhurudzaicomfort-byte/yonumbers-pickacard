@@ -67,7 +67,7 @@ export default function HomePage() {
             Dial <span className="text-brand-red">*647#</span> and stand a chance to Win Airtime &amp; More!
           </p>
           <Link href="/info">
-            <Button variant="flat-red" size="md" className="mt-3 w-full">
+            <Button variant="red" size="md" className="mt-3 w-full">
               How it Works
             </Button>
           </Link>

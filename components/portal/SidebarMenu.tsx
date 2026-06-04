@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
 import { usePickACard } from "@/components/pickacard/PickACardProvider";
-import { CloseIcon, ChevronRight } from "./icons";
+import { CloseIcon, ChevronRight, CardsIcon, UserIcon } from "./icons";
 
 const CATEGORIES = ["Action", "Adventure", "Arcade", "Strategy", "Intellectual", "Sport"];
 
@@ -38,26 +37,39 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
               </button>
             </div>
 
-            {/* Featured: Pick a Card & Win */}
+            {/* Featured promo: Pick a Card & Win */}
             <button
               onClick={() => {
                 onClose();
                 openGame();
               }}
-              className="group mt-5 flex items-center gap-3 overflow-hidden rounded-card bg-grad-game p-3 text-left shadow-soft"
+              className="mt-5 flex items-center gap-3 overflow-hidden rounded-card bg-grad-navy-card p-3 text-left shadow-soft"
             >
-              <span className="relative h-12 w-12 shrink-0">
-                <Image src="/brand/chest.png" alt="" aria-hidden fill sizes="48px" className="object-contain drop-shadow" />
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-gold-500 text-navy-900">
+                <CardsIcon className="h-6 w-6" />
               </span>
               <span className="flex-1">
                 <span className="flex items-center gap-2">
-                  <span className="font-display font-extrabold uppercase text-white">Pick a Card &amp; Win</span>
-                  <span className="rounded-pill bg-gold-500 px-2 py-0.5 text-[10px] font-extrabold text-navy-900 animate-bob">NEW</span>
+                  <span className="font-display font-extrabold text-white">Pick a Card &amp; Win</span>
+                  <span className="rounded-pill bg-gold-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-navy-900">New</span>
                 </span>
                 <span className="block text-xs font-semibold text-white/85">Airtime, Data &amp; More!</span>
               </span>
               <ChevronRight className="h-5 w-5 text-white" />
             </button>
+
+            {/* Account */}
+            <Link
+              href="/auth"
+              onClick={onClose}
+              className="mt-3 flex items-center gap-3 rounded-card border-2 border-divider p-3 text-navy-700 hover:border-navy-700/30"
+            >
+              <span className="grid h-10 w-10 place-items-center rounded-[14px] bg-surface-alt text-navy-700">
+                <UserIcon className="h-5 w-5" />
+              </span>
+              <span className="flex-1 font-display font-bold">Login / Subscribe</span>
+              <ChevronRight className="h-5 w-5 text-ink" />
+            </Link>
 
             <nav className="mt-6 flex flex-col gap-1 font-body text-navy-700">
               <p className="px-1 font-display text-sm font-extrabold uppercase tracking-wide text-navy-700">Games</p>
@@ -69,7 +81,7 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
               <Link href="/leaderboard" onClick={onClose} className="mt-2 rounded-input px-3 py-2 font-semibold hover:bg-surface-alt">Leaderboard</Link>
             </nav>
 
-            <div className="mt-6 border-t border-black/5 pt-4">
+            <div className="mt-6 border-t border-divider pt-4">
               {[
                 { label: "How it works", href: "/info" },
                 { label: "Terms & Conditions", href: "/info" },
