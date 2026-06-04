@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# YoNumbers — Pick a Card & Win
 
-## Getting Started
+A production-grade, fully responsive, animated web experience for **YoNumbers by
+Econet Wireless** (dial `*647#`). The signature **“Pick a Card & Win”** game is
+built as a **portal-native pop-up engagement module** — it opens as an overlay on
+top of the YoNumbers portal (no hard navigation), drops the user into a joyful,
+gamified mini-game, and returns them exactly where they were.
 
-First, run the development server:
+> **Live:** _add your Vercel URL here after deploy_ → `https://<project>.vercel.app`
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Screens
+
+| Portal Home | Pop-up Intro | Card Grid | Reward |
+| --- | --- | --- | --- |
+| ![Home](screenshots/home.png) | ![Intro](screenshots/intro.png) | ![Grid](screenshots/grid.png) | ![Reward](screenshots/reward.png) |
+
+| Subscribe / Login | Information | Sidebar Menu | Leaderboard |
+| --- | --- | --- | --- |
+| ![Auth](screenshots/auth.png) | ![Info](screenshots/info.png) | ![Sidebar](screenshots/sidebar.png) | ![Leaderboard](screenshots/leaderboard.png) |
+
+## What’s inside
+
+- **Two coordinated themes** — a clean **Core** portal (navy + red, Nunito) and a
+  vibrant **PickaCard** game world (purple gradient, candy buttons, gold chests,
+  magenta lockup, Baloo 2).
+- **Pick a Card as a pop-up overlay** — launched from three entry points (sidebar
+  menu, Home promo card, floating chest launcher), all via a single
+  `usePickACard()` controller. The host page stays mounted; the URL updates to
+  `?pickacard=open` for back-button support.
+- **Full in-overlay flow** — intro → subscribe/login → OTP → 3×4 chest grid →
+  3D card flip → win/lose reward (confetti + staggered stars + ribbon) → return,
+  with the daily-points count-up reflected on the Home badge.
+- **Gamification** — daily play limit/cooldown, points economy, streaks, and
+  configurable odds/prize tiers (all in the mock `gameService`).
+- **Sound design** — a tiny synthesised `useSound()` layer (Web Audio, no asset
+  files), default-on with a persisted mute toggle, never autoplaying before a
+  user gesture.
+- **Genuine brand assets** — every logo, the chest, coin, action-bar glyphs,
+  stars, ribbons and OTP icons are the **actual artwork extracted from the
+  supplied YoNumbers / Econet SVGs** (in `/public/brand` and `/public/img`).
+  Gradients, candy-button shapes and panels are recreated in CSS.
+- **Accessibility & polish** — focus-trapped, labelled dialog; ESC / backdrop /
+  drag-down to close; keyboard-playable; reduced-motion honored throughout;
+  safe-area insets; PWA manifest + icons.
+
+## Tech stack
+
+- **Next.js 14 (App Router) + TypeScript**
+- **Tailwind CSS** with all design tokens in `tailwind.config.ts` + CSS variables
+- **Framer Motion** for animation and transitions
+- **canvas-confetti** for the win celebration
+- Mock services in `/lib` (`gameService`, `otpService`, `pointsStore`) so a real
+  API drops in later without touching the UI.
+
+## Project structure
+
+```
+app/            routes: / (splash) · /home · /games · /leaderboard · /info
+components/
+  brand/        Logo, Lockup, Coin, EconetFooter (extracted assets)
+  ui/           Button (candy + flat), PillToggle, PhoneInput, PackageSelector, OtpInput
+  game/         TreasureCard, RewardPanel, GameTopBar, ActionBar, DailyPoints
+  pickacard/    PickACardProvider (controller) · PickACardModal · Panels
+  portal/       PortalChrome, SidebarMenu, BottomTabBar, FloatingLauncher, …
+lib/            tokens/types, mock services, sound, haptics, confetti
+public/brand/   extracted vector + logo PNGs
+public/img/     extracted promo / free-games imagery
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Local development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The OTP step accepts the dev code **`1234`** (see `lib/otpService.ts`).
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+YoNumbers and Econet Wireless brand assets © Econet Wireless. Built as a UI/UX
+revamp of the supplied Figma designs.

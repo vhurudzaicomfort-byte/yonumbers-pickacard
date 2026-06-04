@@ -3,25 +3,92 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand core */
+  --navy-900: #00263a;
+  --navy-700: #2b368a;
+  --navy-600: #323c8e;
+  --navy-500: #48529a;
+  --brand-red: #e92230;
+  --red-bright: #ed0f29;
+  --red-soft: #fe4b60;
+  --ink-grey: #7a7a7c;
+  --surface: #ffffff;
+  --surface-alt: #f5f5f5;
+
+  /* PickaCard game world */
+  --violet-500: #7654fd;
+  --violet-400: #9c59fe;
+  --magenta-500: #e546ff;
+  --magenta-400: #ff60d2;
+  --green-500: #67eb00;
+  --gold-500: #ffd217;
+  --chest-purple: #4a30aa;
+
+  --radius-pill: 9999px;
+  --radius-card: 28px;
+  --radius-tile: 18px;
+
+  /* Tile fill behind chests on the white game panel */
+  --tile-lavender: #e3e6f8;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--navy-700);
+  font-family: var(--font-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: var(--surface);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+* {
+  box-sizing: border-box;
+}
+
+/* Outlined display lockup helper (layered text-shadow halo) */
+.text-outline-magenta {
+  color: #fff;
+  text-shadow:
+    0 0 1px var(--magenta-500),
+    2px 2px 0 var(--magenta-500),
+    -2px 2px 0 var(--magenta-500),
+    0 4px 14px rgba(229, 70, 255, 0.55);
+}
+.text-outline-navy {
+  color: #fff;
+  text-shadow:
+    2px 2px 0 var(--navy-700),
+    -1px -1px 0 var(--navy-700),
+    0 6px 14px rgba(43, 54, 138, 0.35);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Reduced motion: kill ambient loops + heavy transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.08ms !important;
+    scroll-behavior: auto !important;
   }
+}
+
+.safe-t {
+  padding-top: env(safe-area-inset-top);
+}
+.safe-b {
+  padding-bottom: env(safe-area-inset-bottom);
 }
