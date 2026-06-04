@@ -32,7 +32,7 @@ export function IntroPanel({ onPlay, onDismiss }: { onPlay: () => void; onDismis
         ))}
       </div>
 
-      <Lockup variant="purple" className="w-40" priority />
+      <Lockup tone="light" className="text-xl" priority />
 
       <h2 className="font-display text-2xl font-extrabold leading-tight text-navy-700">
         Congratulations!

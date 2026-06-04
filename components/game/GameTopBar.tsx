@@ -9,7 +9,7 @@ export function GameTopBar({ points }: { points: number }) {
   return (
     <header className="flex items-center justify-between gap-2 px-1">
       <Logo variant="white" className="w-12 shrink-0" />
-      <Lockup variant="white" className="w-[40%] max-w-[180px]" />
+      <Lockup tone="dark" className="text-lg" />
       <DailyPoints value={points} className="shrink-0" />
     </header>
   );

@@ -20,13 +20,13 @@ export interface DailyTier {
 }
 
 export const DAILY_NUMBER_TIERS: DailyTier[] = [
-  { digits: 2, name: "Match 2", prize: "US$0.10" },
-  { digits: 3, name: "Match 3", prize: "US$0.25" },
-  { digits: 4, name: "Match 4", prize: "US$0.50" },
-  { digits: 5, name: "Match 5", prize: "US$1.00" },
-  { digits: 6, name: "Match 6", prize: "US$2.50" },
-  { digits: 7, name: "Match 7", prize: "US$5.00" },
-  { digits: 8, name: "Grand Win", prize: "US$50.00" },
+  { digits: 2, name: "Match 2", prize: "US$0.10 Airtime" },
+  { digits: 3, name: "Match 3", prize: "US$0.25 Airtime" },
+  { digits: 4, name: "Match 4", prize: "US$0.50 Airtime" },
+  { digits: 5, name: "Match 5", prize: "US$1.00 Airtime" },
+  { digits: 6, name: "Match 6", prize: "US$2.50 Airtime" },
+  { digits: 7, name: "Match 7", prize: "US$5.00 Airtime" },
+  { digits: 8, name: "Grand Win", prize: "US$50.00 Airtime" },
 ];
 
 /* ------------------------------------------------------------------ *

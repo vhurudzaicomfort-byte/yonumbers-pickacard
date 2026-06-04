@@ -47,10 +47,10 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* 1) Yesterday's drawn number — 8 digits */}
+        {/* 1) Yesterday's winning number — 8 digits */}
         <div className="flex flex-col items-center text-center">
           <p className="font-display text-sm font-extrabold uppercase tracking-wide text-brand-red">
-            Yesterday&rsquo;s Drawn Number
+            Yesterday&rsquo;s Winning Number
           </p>
           <div className="mt-3 flex items-center justify-center gap-1.5 rounded-card bg-navy-700 px-3 py-4 shadow-soft">
             {yNumber.map((n, i) => (
@@ -67,17 +67,26 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* 2) Number of winners + 3) Grand winner */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-card bg-white p-4 text-center shadow-soft">
-            <p className="font-display text-3xl font-extrabold text-navy-700">{winners.toLocaleString()}</p>
-            <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-600">Winners yesterday</p>
-          </div>
-          <div className="rounded-card bg-white p-4 text-center shadow-soft">
-            <p className="font-display text-sm font-extrabold uppercase tracking-wide text-amber-600">Grand Winner</p>
-            <p className="mt-1 font-display font-extrabold tabular-nums tracking-wide text-navy-700">{grand.masked}</p>
-            <p className="text-xs font-bold text-slate-600">{grand.digits} digits · {grand.prize}</p>
-          </div>
+        {/* 2) Number of winners */}
+        <div className="rounded-card bg-white px-4 py-3 text-center shadow-soft">
+          <span className="font-display text-2xl font-extrabold text-navy-700">{winners.toLocaleString()}</span>{" "}
+          <span className="text-sm font-bold uppercase tracking-wide text-slate-600">winners yesterday</span>
+        </div>
+
+        {/* 3) Grand winner — prize is the dominant element */}
+        <div className="rounded-card bg-white px-5 py-5 text-center shadow-soft">
+          <p className="font-display text-sm font-extrabold uppercase tracking-wide text-brand-red">
+            Grand Winner
+          </p>
+          <p className="mt-1.5 font-display text-3xl font-extrabold leading-tight text-navy-700 sm:text-4xl">
+            {grand.prize}
+          </p>
+          <p className="mt-2 font-display text-sm font-bold tabular-nums tracking-wide text-slate-600">
+            {grand.masked}
+          </p>
+          <span className="mt-1 inline-block rounded-pill bg-amber-500/15 px-2.5 py-0.5 text-xs font-extrabold uppercase tracking-wide text-amber-600">
+            {grand.digits} digits matched
+          </span>
         </div>
 
         {/* 4) The user's personalised result */}
@@ -88,12 +97,17 @@ export default function HomePage() {
             </p>
           </div>
         ) : (
-          <div className="rounded-card bg-white px-4 py-3 text-center shadow-soft">
+          <div className="rounded-card bg-white px-4 py-4 text-center shadow-soft">
             <p className="font-display text-sm font-bold text-navy-700">
-              Oops, you have no matching numbers. Try pick a card.
+              Oops, no matching numbers today — try Pick a Card &amp; Win!
             </p>
-            <Button variant="red" size="sm" className="mt-2" onClick={() => open({ intro: false })}>
-              Pick a Card
+            <Button
+              variant="red"
+              size="md"
+              className="mx-auto mt-3 w-full max-w-[280px] whitespace-nowrap"
+              onClick={() => open({ intro: false })}
+            >
+              Pick a Card &amp; Win
             </Button>
           </div>
         )}

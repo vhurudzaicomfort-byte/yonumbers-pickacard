@@ -1,6 +1,6 @@
 import { PortalChrome } from "@/components/portal/PortalChrome";
 import { Accordion } from "@/components/portal/Accordion";
-import { Lockup } from "@/components/brand/Lockup";
+import { Logo } from "@/components/brand/Logo";
 
 const PLAY_STEPS: [string, string][] = [
   ["Subscribe", "Dial *647# and choose Daily (US$0.05), Weekly (US$0.10) or Monthly (US$0.25)."],
@@ -25,8 +25,8 @@ export default function InfoPage() {
   return (
     <PortalChrome title="Information" showLauncher>
       <div className="pt-2">
-        <div className="mb-4 flex justify-end">
-          <Lockup variant="purple" className="w-40" />
+        <div className="mb-5 mt-2 flex justify-center">
+          <Logo variant="navy" className="w-36" priority />
         </div>
 
         <Accordion title="About YoNumbers" defaultOpen>
