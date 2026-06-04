@@ -26,7 +26,7 @@ export const DAILY_NUMBER_TIERS: DailyTier[] = [
   { digits: 5, name: "Match 5", prize: "US$1.00" },
   { digits: 6, name: "Match 6", prize: "US$2.50" },
   { digits: 7, name: "Match 7", prize: "US$5.00" },
-  { digits: 8, name: "Grand Win", prize: "Top Prize" },
+  { digits: 8, name: "Grand Win", prize: "US$50.00" },
 ];
 
 /* ------------------------------------------------------------------ *

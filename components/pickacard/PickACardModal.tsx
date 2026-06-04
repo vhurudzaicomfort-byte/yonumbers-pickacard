@@ -125,7 +125,7 @@ export function PickACardModal({ intro = false }: { intro?: boolean }) {
           className="flex shrink-0 items-center justify-between gap-2 bg-navy-700 px-4 py-3"
           style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
         >
-          <Logo variant="white" className="w-9" />
+          <Logo variant="white" className="w-12 shrink-0" priority />
           <div className="flex items-center gap-1.5 rounded-pill bg-white/12 px-3 py-1.5">
             <span className="font-display text-sm font-extrabold tabular-nums text-white">{points.toLocaleString()}</span>
             <Coin className="h-5 w-5" />

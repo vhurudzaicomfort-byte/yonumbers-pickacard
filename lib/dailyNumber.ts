@@ -36,9 +36,27 @@ export function tierForMatch(matchLen: number): DailyTier | null {
   return best;
 }
 
-/** Convenience: evaluate a subscriber number against today's Daily Number. */
+/** Convenience: evaluate a subscriber number against a day's Daily Number. */
 export function evaluateDailyMatch(msisdn: string, isoDate: string) {
   const dailyNumber = dailyNumberFor(isoDate);
   const matchLen = longestTrailingMatch(msisdn, dailyNumber);
   return { dailyNumber, matchLen, tier: tierForMatch(matchLen) };
+}
+
+function seedFrom(isoDate: string): number {
+  let seed = 0;
+  for (const ch of isoDate) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+  return seed;
+}
+
+/** Demo: total winners from a day's draw (deterministic per date). */
+export function winnersFor(isoDate: string): number {
+  return 600 + (seedFrom(isoDate + "w") % 900);
+}
+
+/** Demo: the grand winner of a day's draw — a masked number + full-match prize. */
+export function grandWinnerFor(isoDate: string): { masked: string; digits: number; prize: string } {
+  const dn = dailyNumberFor(isoDate);
+  const grand = tierForMatch(DAILY_DIGITS);
+  return { masked: `07****${dn.slice(-4)}`, digits: DAILY_DIGITS, prize: grand ? grand.prize : "Top Prize" };
 }

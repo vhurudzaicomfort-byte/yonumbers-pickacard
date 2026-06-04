@@ -17,8 +17,10 @@ export interface PlayState {
   day: string;
   picksToday: number;
   streak: number;
-  /** Whether the user is treated as subscribed/authenticated this session. */
+  /** Whether the user is treated as authenticated this session. */
   authed: boolean;
+  /** Whether the user holds an active YoNumbers subscription. */
+  subscribed: boolean;
   phone: string;
 }
 
@@ -38,6 +40,7 @@ const fallback: PlayState = {
   picksToday: 0,
   streak: 1,
   authed: false,
+  subscribed: false,
   phone: "",
 };
 
@@ -105,6 +108,9 @@ export const playStore = {
   },
   setAuthed(authed: boolean, phone = state.phone) {
     set({ authed, phone });
+  },
+  setSubscribed(subscribed: boolean) {
+    set({ subscribed });
   },
   reset() {
     set({ ...fallback, day: today() });

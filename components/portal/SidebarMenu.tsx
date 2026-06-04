@@ -4,12 +4,14 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
 import { usePickACard } from "@/components/pickacard/PickACardProvider";
+import { usePlayState } from "@/lib/pointsStore";
 import { CloseIcon, ChevronRight, CardsIcon, UserIcon } from "./icons";
 
 const CATEGORIES = ["Action", "Adventure", "Arcade", "Strategy", "Intellectual", "Sport"];
 
 export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { open: openGame } = usePickACard();
+  const play = usePlayState();
 
   return (
     <AnimatePresence>
@@ -58,17 +60,19 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
               <ChevronRight className="h-5 w-5 text-white" />
             </button>
 
-            {/* Account */}
+            {/* Account — active subscribers always get a clear one-tap opt-out */}
             <Link
-              href="/auth"
+              href={play.subscribed ? "/unsubscribe" : "/auth"}
               onClick={onClose}
               className="mt-3 flex items-center gap-3 rounded-card border-2 border-divider p-3 text-navy-700 hover:border-navy-700/30"
             >
               <span className="grid h-10 w-10 place-items-center rounded-[14px] bg-surface-alt text-navy-700">
                 <UserIcon className="h-5 w-5" />
               </span>
-              <span className="flex-1 font-display font-bold">Login / Subscribe</span>
-              <ChevronRight className="h-5 w-5 text-ink" />
+              <span className="flex-1 font-display font-bold">
+                {play.subscribed ? "Unsubscribe" : "Login / Subscribe"}
+              </span>
+              <ChevronRight className="h-5 w-5 text-slate-400" />
             </Link>
 
             <nav className="mt-6 flex flex-col gap-1 font-body text-navy-700">
