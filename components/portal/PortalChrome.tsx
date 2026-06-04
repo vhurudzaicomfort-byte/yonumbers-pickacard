@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
 import { SidebarMenu } from "./SidebarMenu";
@@ -36,7 +37,9 @@ export function PortalChrome({
       <div className="bg-grad-navy-foot">
         <header className="sticky top-0 z-[600] flex h-16 items-center justify-between gap-4 bg-surface/90 px-4 backdrop-blur safe-t">
           <div className="flex min-w-0 items-center gap-2">
-            <Logo variant="navy" className="w-8 shrink-0" priority />
+            <Link href="/home" aria-label="YoNumbers home" className="shrink-0 rounded-pill">
+              <Logo variant="navy" className="w-8" priority />
+            </Link>
             <h1 className="truncate font-display text-[22px] font-extrabold leading-none text-navy-700">{title}</h1>
           </div>
           <motion.button

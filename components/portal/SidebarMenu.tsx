@@ -33,7 +33,9 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
             aria-label="Menu"
           >
             <div className="flex items-center justify-between">
-              <Logo variant="navy" className="w-24" />
+              <Link href="/home" onClick={onClose} aria-label="YoNumbers home" className="rounded-pill">
+                <Logo variant="navy" className="w-24" />
+              </Link>
               <button onClick={onClose} aria-label="Close menu" className="grid h-10 w-10 place-items-center rounded-pill text-navy-700 hover:bg-surface-alt">
                 <CloseIcon className="h-6 w-6" />
               </button>
@@ -45,19 +47,19 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
                 onClose();
                 openGame();
               }}
-              className="mt-5 flex items-center gap-3 overflow-hidden rounded-card bg-grad-navy-card p-3 text-left shadow-soft"
+              className="mt-5 flex w-full items-center gap-3 overflow-hidden rounded-card bg-grad-navy-card p-3 text-left shadow-soft"
             >
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-gold-500 text-navy-900">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-amber-500 text-navy-900">
                 <CardsIcon className="h-6 w-6" />
               </span>
-              <span className="flex-1">
-                <span className="flex items-center gap-2">
-                  <span className="font-display font-extrabold text-white">Pick a Card &amp; Win</span>
-                  <span className="rounded-pill bg-gold-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-navy-900">New</span>
+              <span className="min-w-0 flex-1">
+                <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                  <span className="font-display text-sm font-extrabold leading-tight text-white">Pick a Card &amp; Win</span>
+                  <span className="shrink-0 rounded-pill bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-navy-900">New</span>
                 </span>
-                <span className="block text-xs font-semibold text-white/85">Airtime, Data &amp; More!</span>
+                <span className="mt-0.5 block truncate text-xs font-semibold text-white/85">Airtime, Data &amp; More!</span>
               </span>
-              <ChevronRight className="h-5 w-5 text-white" />
+              <ChevronRight className="h-5 w-5 shrink-0 text-white" />
             </button>
 
             {/* Account — active subscribers always get a clear one-tap opt-out */}
