@@ -1,0 +1,42 @@
+feat: DS v2.0 revamp — onboarding, one-screen modal, reward fix, auto-pop, content + reward logic
+
+Implements the YoNumbers Revamp Review across seven areas.
+
+Design System v2.0:
+- Remap tokens to Econet Blue #001B8D anchor, Econet Red #E2231A action,
+  Rewards Amber #FFB020 accent, Ink/Slate; 14px card radius, 8px rhythm.
+- Type: Sora (display) + Manrope (body). DS focus ring (Digital Blue + halo).
+- Brand stars now Rewards Amber with an Ink outline + soft glow (never white-on-amber).
+
+Onboarding / portal entry:
+- Loading splash now routes into the Login screen; compliant tagline.
+- /auth flow (Login/Subscribe tabs + red underline, +263 input, Select Package
+  Daily/Weekly/Monthly, OTP timer + Confirm, Success tick + Continue, Econet
+  co-brand + T&C/FAQ footer) carried to v2.0; demo login preserved.
+
+Pick a Card pop-up — one screen, no scroll:
+- Full-height (100svh) flex column with safe-area insets; header + 3×4 grid +
+  status + Econet footer all visible at once, nothing clipped.
+- Grid is aspect-locked and sized from remaining height (min-h-0), so it fits
+  360×640 up to large displays, portrait and landscape.
+
+Reward reveal:
+- Reward renders on its own top layer above the tiles (never overlapped).
+- Three stars as one centred, evenly-spaced group in front of the ribbon —
+  centre larger + raised, outer smaller + symmetric, full stars, staggered pop-in.
+
+Login auto-trigger:
+- After login, the pop-up auto-opens once per session (persisted flag) with a
+  "Congratulations! You qualify…" entry state + red Play & Win CTA + Maybe later;
+  respects already-played / out-of-picks (shows the right state). Still available
+  from the menu and Home promo card.
+
+Content + reward logic:
+- Info page rebuilt with compliant About / How to Play & Win Big / FAQ / Terms.
+- Tunable reward config (lib/rewardConfig.ts): Daily Number tiers (§6) + points
+  engine K/weights/flips/streak (§7); lib/dailyNumber.ts match logic; gameService
+  reads the config; Home shows Today's Daily Number + the user's match tier.
+
+tsc + next build pass; all routes 200.
+
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>

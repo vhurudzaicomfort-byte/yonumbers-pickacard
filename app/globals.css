@@ -3,20 +3,22 @@
 @tailwind utilities;
 
 :root {
-  --navy-900: #00263a;
-  --navy-700: #2b368a;
-  --navy-600: #323c8e;
-  --navy-500: #48529a;
-  --brand-red: #e92230;
-  --red-bright: #ed0f29;
-  --ink-grey: #7a7a7c;
-  --divider: #e6e8f2;
+  /* Econet Digital Lifestyle Design System v2.0 */
+  --econet-blue: #001b8d;
+  --digital-blue: #2e5bff;
+  --econet-red: #e2231a;
+  --rewards-amber: #ffb020;
+  --ink: #0a0e1f;
+  --slate-600: #4a5266;
+  --slate-400: #8a93a6;
+  --slate-100: #edf0f5;
   --surface: #ffffff;
-  --surface-alt: #f5f5f5;
+  --surface-alt: #f5f6fa;
 
   --radius-pill: 9999px;
-  --radius-card: 28px;
-  --radius-tile: 18px;
+  --radius-card: 14px;
+  --radius-tile: 14px;
+  --ease-ds: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 html,
@@ -26,7 +28,7 @@ body {
 }
 
 body {
-  color: var(--navy-700);
+  color: var(--ink);
   font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   background: var(--surface);
@@ -34,6 +36,14 @@ body {
 
 * {
   box-sizing: border-box;
+}
+
+/* DS v2.0 accessibility: visible focus ring (3px Digital Blue + 14% halo). */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--digital-blue);
+  outline-offset: 2px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 6px rgba(46, 91, 255, 0.14);
 }
 
 .no-scrollbar::-webkit-scrollbar {

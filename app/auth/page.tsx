@@ -64,6 +64,13 @@ export default function AuthPage() {
 
   const finish = () => {
     playStore.setAuthed(true, phone);
+    // Flag a fresh login so the portal auto-surfaces the Pick a Card welcome once.
+    try {
+      sessionStorage.setItem("yonumbers.justLoggedIn", "1");
+      sessionStorage.removeItem("yonumbers.introShown");
+    } catch {
+      /* ignore */
+    }
     router.push("/home");
   };
 

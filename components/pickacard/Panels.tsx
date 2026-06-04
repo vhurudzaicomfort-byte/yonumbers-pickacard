@@ -11,8 +11,11 @@ import { vibrate } from "@/lib/haptics";
 import type { PickResult } from "@/lib/types";
 
 /**
- * The Pick a Card game grid — the entire in-overlay experience (Addendum B:
- * no auth/OTP inside the pop-up; it goes straight to play). Core themed.
+ * The Pick a Card game grid. Lays out as a flex column that fills the space
+ * between the modal header and footer with NO scrolling: the 3×4 grid is sized
+ * from the remaining height (aspect-locked wrapper) so it always fits, from
+ * 360×640 up to large displays, portrait and landscape. The reward reveal
+ * renders on its own top layer above the tiles, so the stars never clip.
  */
 export function GridPanel({ onPointsChange, onClose }: { onPointsChange: (p: number) => void; onClose: () => void }) {
   const [states, setStates] = useState<CardState[]>(() => Array(GRID_SIZE).fill("idle"));
@@ -50,15 +53,15 @@ export function GridPanel({ onPointsChange, onClose }: { onPointsChange: (p: num
   };
 
   return (
-    <div className="flex flex-col gap-4 px-4 pb-5 pt-2">
-      <div className="text-center">
-        <h2 className="font-display text-xl font-extrabold text-navy-700">Pick a Card &amp; Win</h2>
-        <p className="mt-0.5 text-sm font-semibold text-ink">Every card hides a reward — Airtime, Data &amp; More!</p>
+    <div className="relative flex min-h-0 flex-1 flex-col gap-2 px-4 py-2">
+      <div className="shrink-0 text-center">
+        <h2 className="font-display text-lg font-extrabold leading-tight text-navy-700">Pick a Card &amp; Win</h2>
+        <p className="text-xs font-semibold text-slate-600">Every card hides a reward — Airtime, Data &amp; More!</p>
       </div>
 
-      {/* game panel */}
-      <div className="relative rounded-card bg-surface-alt p-3 shadow-soft sm:p-4">
-        <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+      {/* grid area — flexes to fill; aspect-locked so the 3×4 always fits */}
+      <div className="flex min-h-0 flex-1 items-center justify-center">
+        <div className="grid aspect-[3/4] h-full max-h-full w-auto max-w-full grid-cols-3 grid-rows-4 gap-2 sm:gap-2.5">
           {states.map((st, i) => (
             <TreasureCard
               key={i}
@@ -70,29 +73,9 @@ export function GridPanel({ onPointsChange, onClose }: { onPointsChange: (p: num
             />
           ))}
         </div>
-
-        <AnimatePresence>
-          {result && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 z-20 flex items-center justify-center rounded-card bg-navy-900/35 p-3 backdrop-blur-[2px]"
-            >
-              <RewardPanel
-                result={result}
-                onClaim={() => {
-                  play("claim");
-                  onClose();
-                }}
-                onRetry={() => (playStore.picksLeft() > 0 ? reset() : onClose())}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
 
-      <p ref={liveRef} aria-live="polite" className="min-h-[1.5rem] text-center font-display font-bold uppercase tracking-wide text-navy-700">
+      <p ref={liveRef} aria-live="polite" className="min-h-[1.25rem] shrink-0 text-center font-display text-sm font-bold uppercase tracking-wide text-navy-700">
         {exhausted
           ? "You're out of picks — come back tomorrow!"
           : picked === null
@@ -100,9 +83,30 @@ export function GridPanel({ onPointsChange, onClose }: { onPointsChange: (p: num
             : ""}
       </p>
 
-      <p className="text-center text-xs font-bold uppercase tracking-wide text-ink">
+      <p className="shrink-0 text-center text-[11px] font-bold uppercase tracking-wide text-slate-400">
         {picksLeft} {picksLeft === 1 ? "pick" : "picks"} left today
       </p>
+
+      {/* reward reveal — own top layer above the grid, never overlapped by tiles */}
+      <AnimatePresence>
+        {result && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-50 flex items-center justify-center bg-navy-900/45 p-5 backdrop-blur-sm"
+          >
+            <RewardPanel
+              result={result}
+              onClaim={() => {
+                play("claim");
+                onClose();
+              }}
+              onRetry={() => (playStore.picksLeft() > 0 ? reset() : onClose())}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

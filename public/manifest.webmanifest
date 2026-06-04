@@ -4,8 +4,8 @@
   "description": "Play & Win airtime, data & more every day with YoNumbers by Econet.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#2B368A",
-  "theme_color": "#2B368A",
+  "background_color": "#001B8D",
+  "theme_color": "#001B8D",
   "orientation": "portrait",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },

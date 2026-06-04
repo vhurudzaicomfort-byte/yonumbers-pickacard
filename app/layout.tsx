@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito, Poppins } from "next/font/google";
+import { Sora, Manrope } from "next/font/google";
 import "./globals.css";
 import { PickACardProvider } from "@/components/pickacard/PickACardProvider";
 
-const body = Nunito({
+// DS v2.0 type: Manrope (body) + Sora (display).
+const body = Manrope({
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--font-body",
   display: "swap",
 });
 
-const display = Poppins({
+const display = Sora({
   subsets: ["latin"],
   weight: ["600", "700", "800"],
   variable: "--font-display",
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2B368A",
+  themeColor: "#001B8D",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,

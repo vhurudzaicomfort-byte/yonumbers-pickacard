@@ -12,8 +12,9 @@ import { cn } from "@/lib/cn";
 import type { PickResult } from "@/lib/types";
 
 /**
- * Win/lose reward card — Core theme. Navy ribbon (win) / red ribbon (lose),
- * staggered brand stars, prize, and a red CLAIM / TRY AGAIN action.
+ * Win / lose reward card. Rendered on the modal's own top layer (above the card
+ * grid), so the celebration stars sit fully in front of the ribbon, centred and
+ * un-clipped: centre star larger + raised, two smaller outer stars, even gap.
  */
 export function RewardPanel({
   result,
@@ -38,34 +39,40 @@ export function RewardPanel({
     }
   }, [win, play]);
 
+  // small · large(raised) · small — symmetric, evenly spaced.
+  const stars = [
+    { size: "h-7 w-7", lift: "translate-y-1" },
+    { size: "h-11 w-11", lift: "-translate-y-2" },
+    { size: "h-7 w-7", lift: "translate-y-1" },
+  ];
+
   return (
     <motion.div
-      initial={{ scale: 0.8, opacity: 0, y: 20 }}
+      initial={{ scale: 0.82, opacity: 0, y: 18 }}
       animate={{ scale: 1, opacity: 1, y: 0 }}
       exit={{ scale: 0.85, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 320, damping: 24 }}
-      className="relative w-full max-w-[300px]"
+      transition={{ type: "spring", stiffness: 320, damping: 26 }}
+      className="relative w-full max-w-[320px]"
       role="alertdialog"
-      aria-label={win ? "Congratulations" : "So close — play again"}
+      aria-label={win ? "Congratulations, you won a prize" : "So close, play again"}
     >
-      {/* Decorative stars: a symmetric crest sitting BEHIND the ribbon (z-0).
-          They peek above the banner but never cover the message — the text
-          always renders on solid colour, so contrast stays WCAG-safe. */}
-      <div className="pointer-events-none absolute inset-x-0 -top-7 z-0 flex items-end justify-center gap-3">
-        {[0, 1, 2].map((i) => (
+      {/* stars — centred group, in front of the ribbon, never clipped */}
+      <div className="relative z-30 -mb-3 flex items-end justify-center gap-2.5 px-2">
+        {stars.map((s, i) => (
           <motion.span
             key={i}
-            initial={{ scale: 0, y: 8 }}
-            animate={{ scale: i === 1 ? 1 : 0.62, y: i === 1 ? -6 : 0 }}
-            transition={{ delay: 0.12 + i * 0.1, type: "spring", stiffness: 460, damping: 15 }}
+            className={cn(s.lift)}
+            initial={{ scale: 0, y: 10 }}
+            animate={{ scale: 1, y: 0 }}
+            transition={{ delay: 0.1 + i * 0.12, type: "spring", stiffness: 460, damping: 14 }}
           >
-            <Star className={cn("drop-shadow-sm", i === 1 ? "h-10 w-10" : "h-6 w-6")} tone={win ? "gold" : "muted"} />
+            <Star className={s.size} tone={win ? "gold" : "muted"} />
           </motion.span>
         ))}
       </div>
 
-      {/* CSS ribbon banner — sits above the stars (z-10) so the message stays dominant */}
-      <div className="relative z-10 mx-auto -mb-3 w-[108%] -translate-x-[4%]">
+      {/* ribbon banner */}
+      <div className="relative z-20 mx-auto w-[104%] -translate-x-[2%]">
         <div
           className={cn(
             "relative py-2.5 text-center font-display text-[15px] font-extrabold uppercase tracking-wider text-white shadow-md",
@@ -78,14 +85,16 @@ export function RewardPanel({
       </div>
 
       {/* card body */}
-      <div className="rounded-card bg-white px-6 pb-6 pt-7 text-center shadow-card">
-        <p className="font-display font-bold uppercase tracking-wide text-navy-500">You have won</p>
+      <div className="relative z-10 -mt-2 rounded-card bg-white px-6 pb-6 pt-7 text-center shadow-card">
+        <p className="font-display text-sm font-bold uppercase tracking-wide text-slate-600">
+          {win ? "You have won" : "Better luck next flip"}
+        </p>
         {win ? (
           <>
-            <p className="mt-2 rounded-pill bg-navy-100 py-2 font-display text-xl font-extrabold text-navy-700">
+            <p className="mt-2 rounded-pill bg-amber-500/15 py-2 font-display text-xl font-extrabold text-navy-700">
               {result.prize.label}
             </p>
-            <p className="mt-4 font-display font-bold uppercase tracking-wide text-navy-500">
+            <p className="mt-4 font-display text-sm font-bold uppercase tracking-wide text-slate-600">
               With Daily Points
             </p>
             <div className="mt-1 flex items-center justify-center gap-2">
@@ -99,7 +108,7 @@ export function RewardPanel({
         ) : (
           <>
             <p className="mt-2 rounded-pill bg-navy-100 py-2 font-display text-2xl font-extrabold text-navy-700">00</p>
-            <p className="mt-3 text-sm font-bold text-ink">+{result.prize.points} points for playing</p>
+            <p className="mt-3 text-sm font-bold text-slate-600">+{result.prize.points} points for playing</p>
             <Button variant="red" size="md" className="mt-5 w-full" onClick={onRetry}>
               Play Again
             </Button>

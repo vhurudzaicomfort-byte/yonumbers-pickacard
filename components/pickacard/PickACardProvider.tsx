@@ -16,9 +16,16 @@ const PickACardModal = dynamic(
   { ssr: false },
 );
 
+interface OpenOptions {
+  /** Element that launched the pop-up, so focus can return to it. */
+  launcher?: HTMLElement | null;
+  /** Show the welcome/qualify entry state before the grid (login auto-open). */
+  intro?: boolean;
+}
+
 interface PickACardContextValue {
   isOpen: boolean;
-  open: (launcher?: HTMLElement | null) => void;
+  open: (launcherOrOpts?: HTMLElement | OpenOptions | null) => void;
   close: () => void;
   /** Element that launched the pop-up, so focus can return to it. */
   launcherRef: React.MutableRefObject<HTMLElement | null>;
@@ -34,10 +41,14 @@ export function usePickACard() {
 
 export function PickACardProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [intro, setIntro] = useState(false);
   const launcherRef = useRef<HTMLElement | null>(null);
 
-  const open = useCallback((launcher?: HTMLElement | null) => {
-    launcherRef.current = launcher ?? (document.activeElement as HTMLElement | null);
+  const open = useCallback((launcherOrOpts?: HTMLElement | OpenOptions | null) => {
+    const opts: OpenOptions =
+      launcherOrOpts instanceof HTMLElement ? { launcher: launcherOrOpts } : launcherOrOpts ?? {};
+    launcherRef.current = opts.launcher ?? (document.activeElement as HTMLElement | null);
+    setIntro(!!opts.intro);
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.set("pickacard", "open");
@@ -65,7 +76,7 @@ export function PickACardProvider({ children }: { children: React.ReactNode }) {
   return (
     <Ctx.Provider value={value}>
       {children}
-      {isOpen && <PickACardModal />}
+      {isOpen && <PickACardModal intro={intro} />}
     </Ctx.Provider>
   );
 }

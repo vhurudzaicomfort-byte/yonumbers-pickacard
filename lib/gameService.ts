@@ -1,9 +1,10 @@
 import type { PickResult, Prize, PackageOption } from "./types";
+import { PICK_A_CARD_PRIZES as PRIZE_TABLE, LOSE_PRIZE as LOSE, WIN_PROBABILITY } from "./rewardConfig";
 
 /**
- * Mock game service. Win/lose outcome, prize value and points all come from
- * here (configurable weights + tiers) — never hard-coded in the UI. Swap this
- * module for a real API client later; the interface stays identical.
+ * Mock game service. Win/lose outcome, prize value and points all come from the
+ * tunable reward config (see lib/rewardConfig.ts) — never hard-coded in the UI.
+ * Swap this module for a real API client later; the interface stays identical.
  */
 
 export const PACKAGES: PackageOption[] = [
@@ -11,24 +12,6 @@ export const PACKAGES: PackageOption[] = [
   { id: "weekly", label: "WEEKLY", price: "US$0.10" },
   { id: "monthly", label: "MONTHLY", price: "US$0.25" },
 ];
-
-interface PrizeTier extends Prize {
-  weight: number;
-}
-
-/** Weighted prize table. Tune `weight` to change prize probabilities. */
-const PRIZE_TABLE: PrizeTier[] = [
-  { kind: "airtime", label: "US$1.00 AIRTIME", points: 15, weight: 6 },
-  { kind: "airtime", label: "US$0.50 AIRTIME", points: 10, weight: 10 },
-  { kind: "data", label: "500MB DATA", points: 12, weight: 8 },
-  { kind: "data", label: "1GB DATA", points: 20, weight: 4 },
-  { kind: "points", label: "BONUS POINTS", points: 25, weight: 7 },
-];
-
-const LOSE: Prize = { kind: "none", label: "00", points: 5 };
-
-/** Overall probability of a winning pick. */
-const WIN_PROBABILITY = 0.55;
 
 function weightedPrize(): Prize {
   const total = PRIZE_TABLE.reduce((s, p) => s + p.weight, 0);

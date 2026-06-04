@@ -1,8 +1,11 @@
 import type { Config } from "tailwindcss";
 
 /**
- * YoNumbers design tokens — Core brand only (Addendum B).
- * Navy + red + white, rounded sans. No game-world purple/candy palette.
+ * YoNumbers design tokens — Econet Digital Lifestyle Design System v2.0.
+ * Econet Blue anchor (#001B8D), single Econet Red action (#E2231A),
+ * Rewards Amber accent (#FFB020). Sora display + Manrope body. 8px grid.
+ * The legacy `navy`/`brand`/`gold` token names are retained but now resolve to
+ * v2.0 values, so existing class names render the refreshed brand.
  */
 const config: Config = {
   content: [
@@ -13,22 +16,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Econet Blue family — primary anchor (headers, dark surfaces, trust).
         navy: {
-          900: "#00263A",
-          700: "#2B368A", // primary brand blue
-          600: "#323C8E",
-          500: "#48529A",
-          100: "#E6E8F2",
+          900: "#000F4D",
+          700: "#001B8D", // Econet Blue — anchor
+          600: "#1B2BA6", // lighter, for hover lifts
+          500: "#5560A6", // secondary text / muted blue
+          100: "#E5E8F6", // tint surface
         },
+        econetBlue: "#001B8D",
+        digitalBlue: "#2E5BFF", // links, focus ring, interactive
         brand: {
-          red: "#E92230",
-          redBright: "#ED0F29",
-          redSoft: "#FE4B60",
+          red: "#E2231A", // Econet Red — the single primary action
+          redBright: "#F5332A",
+          redSoft: "#FF6259",
         },
-        ink: "#7A7A7C",
+        // Rewards Amber — the YoNumbers accent (points, prizes, badges).
+        amber: { 300: "#FFD37A", 500: "#FFB020", 600: "#E89A12" },
+        gold: { 300: "#FFD37A", 500: "#FFB020", 600: "#E89A12" }, // legacy alias → amber
+        ink: "#0A0E1F", // body text
+        slate: { 600: "#4A5266", 400: "#8A93A6", 100: "#EDF0F5" },
+        success: "#1FA463",
+        warning: "#F0A020",
         divider: "#E6E8F2",
-        surface: { DEFAULT: "#FFFFFF", alt: "#F5F5F5" },
-        gold: { 300: "#FEF270", 500: "#FFD217", 600: "#FED903" }, // coin / star accent only
+        surface: { DEFAULT: "#FFFFFF", alt: "#F5F6FA" },
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
@@ -36,20 +47,23 @@ const config: Config = {
       },
       borderRadius: {
         pill: "9999px",
-        card: "28px",
-        tile: "18px",
-        input: "16px",
+        card: "14px", // DS v2.0 card radius
+        tile: "14px",
+        input: "12px",
       },
       boxShadow: {
-        soft: "0 8px 24px rgba(43,54,138,.12)",
-        card: "0 12px 40px rgba(43,54,138,.18)",
-        btn: "0 6px 16px rgba(233,34,48,.28)",
-        btnNavy: "0 6px 16px rgba(43,54,138,.22)",
+        soft: "0 8px 24px rgba(0,27,141,.10)",
+        card: "0 16px 44px rgba(0,27,141,.16)",
+        btn: "0 6px 16px rgba(226,35,26,.26)",
+        btnNavy: "0 6px 16px rgba(0,27,141,.22)",
       },
       backgroundImage: {
         "grad-navy-foot":
-          "radial-gradient(120% 80% at 50% 100%, rgba(43,54,138,.16) 0%, rgba(43,54,138,0) 70%)",
-        "grad-navy-card": "linear-gradient(160deg, #323C8E 0%, #2B368A 55%, #00263A 100%)",
+          "radial-gradient(120% 80% at 50% 100%, rgba(0,27,141,.14) 0%, rgba(0,27,141,0) 70%)",
+        "grad-navy-card": "linear-gradient(160deg, #1B2BA6 0%, #001B8D 55%, #000F4D 100%)",
+      },
+      transitionTimingFunction: {
+        ds: "cubic-bezier(.2,.7,.2,1)", // DS v2.0 signature easing
       },
       keyframes: {
         bob: { "0%,100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-6px)" } },

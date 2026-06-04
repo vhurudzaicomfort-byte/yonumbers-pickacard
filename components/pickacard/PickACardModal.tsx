@@ -7,8 +7,9 @@ import Image from "next/image";
 import { Logo } from "@/components/brand/Logo";
 import { Coin } from "@/components/brand/Coin";
 import { GridPanel } from "./Panels";
+import { IntroPanel } from "./IntroPanel";
 import { usePickACard } from "./PickACardProvider";
-import { usePlayState } from "@/lib/pointsStore";
+import { usePlayState, DAILY_PICK_LIMIT } from "@/lib/pointsStore";
 import { useSound, useMuted } from "@/lib/useSound";
 
 const Icon = {
@@ -31,7 +32,7 @@ const Icon = {
   ),
 };
 
-export function PickACardModal() {
+export function PickACardModal({ intro = false }: { intro?: boolean }) {
   const { close } = usePickACard();
   const play = usePlayState();
   const sound = useSound();
@@ -41,10 +42,21 @@ export function PickACardModal() {
   const [mounted, setMounted] = useState(false);
   const [points, setPoints] = useState(play.points);
 
+  const picksLeft = Math.max(0, DAILY_PICK_LIMIT - play.picksToday);
+  // Show the welcome/qualify beat only on an intro open when the user can play.
+  const [phase, setPhase] = useState<"intro" | "play">(intro ? "intro" : "play");
+
   useEffect(() => setMounted(true), []);
   useEffect(() => {
     sound("open");
   }, [sound]);
+
+  // Respect users who are already out of picks — skip the qualify message.
+  useEffect(() => {
+    if (phase === "intro" && picksLeft <= 0) setPhase("play");
+  }, [phase, picksLeft]);
+
+  useEffect(() => setPoints(play.points), [play.points]);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -90,7 +102,7 @@ export function PickACardModal() {
   if (!mounted) return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-[1000] flex items-end justify-center sm:items-center" role="dialog" aria-modal="true" aria-label="Pick a Card and Win">
+    <div className="fixed inset-0 z-[1000] flex items-stretch justify-center" role="dialog" aria-modal="true" aria-label="Pick a Card and Win">
       <motion.button
         aria-label="Close"
         initial={{ opacity: 0 }}
@@ -102,25 +114,17 @@ export function PickACardModal() {
 
       <motion.div
         ref={sheetRef}
-        initial={reduced ? { opacity: 0 } : { y: "100%", opacity: 0.6 }}
+        initial={reduced ? { opacity: 0 } : { y: 24, opacity: 0 }}
         animate={reduced ? { opacity: 1 } : { y: 0, opacity: 1 }}
-        exit={reduced ? { opacity: 0 } : { y: "100%", opacity: 0 }}
+        exit={reduced ? { opacity: 0 } : { y: 24, opacity: 0 }}
         transition={{ type: "spring", stiffness: 320, damping: 32 }}
-        drag={reduced ? false : "y"}
-        dragConstraints={{ top: 0, bottom: 0 }}
-        dragElastic={{ top: 0, bottom: 0.6 }}
-        onDragEnd={(_, info) => {
-          if (info.offset.y > 120 || info.velocity.y > 700) dismiss();
-        }}
-        className="relative z-10 flex max-h-[94dvh] w-full flex-col overflow-hidden rounded-t-[22px] bg-surface shadow-card sm:max-w-[440px] sm:rounded-[22px]"
+        className="relative z-10 flex h-[100svh] w-full max-w-[460px] flex-col overflow-hidden bg-surface shadow-card sm:h-[min(100svh,900px)] sm:my-auto sm:rounded-[24px]"
       >
-        {/* drag handle (mobile) */}
-        <div className="flex justify-center bg-navy-700 pt-2 sm:hidden">
-          <span className="h-1.5 w-12 rounded-pill bg-white/40" />
-        </div>
-
         {/* navy chrome header */}
-        <header className="flex items-center justify-between gap-2 bg-navy-700 px-4 py-3">
+        <header
+          className="flex shrink-0 items-center justify-between gap-2 bg-navy-700 px-4 py-3"
+          style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
+        >
           <Logo variant="white" className="w-9" />
           <div className="flex items-center gap-1.5 rounded-pill bg-white/12 px-3 py-1.5">
             <span className="font-display text-sm font-extrabold tabular-nums text-white">{points.toLocaleString()}</span>
@@ -136,15 +140,21 @@ export function PickACardModal() {
           </div>
         </header>
 
-        {/* game core */}
-        <div className="no-scrollbar flex-1 overflow-y-auto">
+        {/* body — fills the space between header and footer, never scrolls */}
+        {phase === "intro" ? (
+          <IntroPanel onPlay={() => setPhase("play")} onDismiss={dismiss} />
+        ) : (
           <GridPanel onPointsChange={setPoints} onClose={dismiss} />
-          {/* Econet co-brand line (reversed on navy strip so the white mark reads) */}
-          <div className="flex items-center justify-center gap-2 bg-navy-700 py-3">
-            <span className="relative block h-5 w-20">
-              <Image src="/brand/logo-econet.png" alt="Econet Wireless" fill sizes="80px" className="object-contain" />
-            </span>
-          </div>
+        )}
+
+        {/* Econet co-brand line */}
+        <div
+          className="flex shrink-0 items-center justify-center gap-2 bg-navy-700 py-2.5"
+          style={{ paddingBottom: "max(0.625rem, env(safe-area-inset-bottom))" }}
+        >
+          <span className="relative block h-4 w-16">
+            <Image src="/brand/logo-econet.png" alt="Econet Wireless" fill sizes="64px" className="object-contain" />
+          </span>
         </div>
       </motion.div>
     </div>,

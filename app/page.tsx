@@ -12,7 +12,7 @@ export default function SplashPage() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    router.prefetch("/home");
+    router.prefetch("/auth");
     const start = performance.now();
     const dur = 2000;
     let raf = 0;
@@ -20,7 +20,7 @@ export default function SplashPage() {
       const t = Math.min(1, (now - start) / dur);
       setProgress(t);
       if (t < 1) raf = requestAnimationFrame(tick);
-      else router.replace("/home");
+      else router.replace("/auth");
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
@@ -43,7 +43,7 @@ export default function SplashPage() {
           transition={{ delay: 0.4 }}
           className="mt-6 max-w-[260px] font-body text-base font-semibold text-white/90"
         >
-          Play and Stand a Chance to Win Airtime &amp; More!
+          Play &amp; Win Airtime, Data &amp; More!
         </motion.p>
         <div className="mt-10 h-2 w-56 overflow-hidden rounded-pill bg-white/20">
           <div

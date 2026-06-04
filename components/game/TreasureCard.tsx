@@ -35,7 +35,7 @@ export function TreasureCard({
       onClick={() => onPick(index)}
       onMouseEnter={onHover}
       aria-label={`Card ${index + 1}`}
-      className="group relative aspect-[3/4] w-full rounded-tile outline-none [perspective:900px] focus-visible:ring-4 focus-visible:ring-navy-700/40"
+      className="group relative h-full w-full rounded-tile outline-none [perspective:900px]"
     >
       <motion.div
         className="relative h-full w-full [transform-style:preserve-3d]"
