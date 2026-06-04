@@ -32,7 +32,7 @@ gamified mini-game, and returns them exactly where they were.
   3D card flip → win/lose reward (confetti + staggered stars + ribbon) → return,
   with the daily-points count-up reflected on the Home badge.
 - **Gamification** — daily play limit/cooldown, points economy, streaks, and
-  configurable odds/prize tiers (all in the mock `gameService`).
+  configurable weights/prize tiers (all in the mock `gameService`).
 - **Sound design** — a tiny synthesised `useSound()` layer (Web Audio, no asset
   files), default-on with a persisted mute toggle, never autoplaying before a
   user gesture.

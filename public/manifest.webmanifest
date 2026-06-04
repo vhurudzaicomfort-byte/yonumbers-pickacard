@@ -1,7 +1,7 @@
 {
   "name": "YoNumbers — Pick a Card & Win",
   "short_name": "YoNumbers",
-  "description": "Play and stand a chance to win Airtime, Data & More with YoNumbers by Econet Wireless.",
+  "description": "Play & Win airtime, data & more every day with YoNumbers by Econet.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#2B368A",

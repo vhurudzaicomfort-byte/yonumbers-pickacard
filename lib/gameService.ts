@@ -2,7 +2,7 @@ import type { PickResult, Prize, PackageOption } from "./types";
 
 /**
  * Mock game service. Win/lose outcome, prize value and points all come from
- * here (configurable odds + tiers) — never hard-coded in the UI. Swap this
+ * here (configurable weights + tiers) — never hard-coded in the UI. Swap this
  * module for a real API client later; the interface stays identical.
  */
 
@@ -16,7 +16,7 @@ interface PrizeTier extends Prize {
   weight: number;
 }
 
-/** Weighted prize table. Tune `weight` to change odds. */
+/** Weighted prize table. Tune `weight` to change prize probabilities. */
 const PRIZE_TABLE: PrizeTier[] = [
   { kind: "airtime", label: "US$1.00 AIRTIME", points: 15, weight: 6 },
   { kind: "airtime", label: "US$0.50 AIRTIME", points: 10, weight: 10 },
@@ -27,7 +27,7 @@ const PRIZE_TABLE: PrizeTier[] = [
 
 const LOSE: Prize = { kind: "none", label: "00", points: 5 };
 
-/** Overall chance of a winning pick. */
+/** Overall probability of a winning pick. */
 const WIN_PROBABILITY = 0.55;
 
 function weightedPrize(): Prize {

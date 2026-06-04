@@ -64,7 +64,7 @@ export default function HomePage() {
 
         <div className="rounded-card bg-white p-4 text-center shadow-soft">
           <p className="font-body font-bold text-navy-700">
-            Dial <span className="text-brand-red">*647#</span> and stand a chance to Win Airtime &amp; More!
+            Dial <span className="text-brand-red">*647#</span> to Play &amp; Win Airtime &amp; More!
           </p>
           <Link href="/info">
             <Button variant="red" size="md" className="mt-3 w-full">

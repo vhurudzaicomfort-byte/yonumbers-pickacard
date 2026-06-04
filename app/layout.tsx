@@ -20,7 +20,7 @@ const display = Poppins({
 export const metadata: Metadata = {
   title: "YoNumbers — Pick a Card & Win",
   description:
-    "Play and stand a chance to win Airtime, Data & More with YoNumbers by Econet Wireless. Every card hides a reward — dial *647#.",
+    "Play & Win airtime, data & more every day with YoNumbers by Econet. Match the Daily Number and play Pick a Card — dial *647#.",
   manifest: "/manifest.webmanifest",
   applicationName: "YoNumbers",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "YoNumbers" },

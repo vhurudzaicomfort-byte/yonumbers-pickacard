@@ -46,7 +46,7 @@ export function RewardPanel({
       transition={{ type: "spring", stiffness: 320, damping: 24 }}
       className="relative w-full max-w-[300px]"
       role="alertdialog"
-      aria-label={win ? "Congratulations" : "Try again"}
+      aria-label={win ? "Congratulations" : "So close — play again"}
     >
       {/* Decorative stars: a symmetric crest sitting BEHIND the ribbon (z-0).
           They peek above the banner but never cover the message — the text
@@ -73,7 +73,7 @@ export function RewardPanel({
           )}
           style={{ clipPath: "polygon(4% 0, 96% 0, 100% 50%, 96% 100%, 4% 100%, 0 50%)" }}
         >
-          {win ? "Congratulations!" : "Oops you failed!"}
+          {win ? "Congratulations!" : "So close — Play Again!"}
         </div>
       </div>
 
@@ -93,7 +93,7 @@ export function RewardPanel({
               <span className="font-display text-2xl font-extrabold text-navy-700">{result.prize.points}</span>
             </div>
             <Button variant="red" size="md" className="mt-5 w-full" onClick={onClaim}>
-              Claim
+              Claim Prize
             </Button>
           </>
         ) : (
@@ -101,7 +101,7 @@ export function RewardPanel({
             <p className="mt-2 rounded-pill bg-navy-100 py-2 font-display text-2xl font-extrabold text-navy-700">00</p>
             <p className="mt-3 text-sm font-bold text-ink">+{result.prize.points} points for playing</p>
             <Button variant="red" size="md" className="mt-5 w-full" onClick={onRetry}>
-              Try Again
+              Play Again
             </Button>
           </>
         )}
