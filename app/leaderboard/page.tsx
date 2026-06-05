@@ -76,7 +76,7 @@ export default function LeaderboardPage() {
         </p>
 
         {/* your own masked rank, pinned for reference */}
-        <div className="rounded-card border-2 border-dashed border-navy-100 bg-navy-100/40 p-3">
+        <div className="rounded-card bg-navy-100/40 p-3">
           <p className="mb-2 px-1 font-display text-xs font-extrabold uppercase tracking-wide text-slate-400">Your rank</p>
           <div className="flex items-center gap-3 rounded-card bg-white p-3 shadow-soft ring-2 ring-brand-red/30">
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-pill bg-brand-red font-display text-xs font-extrabold text-white">
