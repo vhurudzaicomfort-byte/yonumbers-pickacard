@@ -113,10 +113,34 @@ export default function HomePage() {
 
         {/* 4) The user's personalised result (demo-rotated) */}
         {tier ? (
-          <div className="rounded-card bg-amber-500/15 px-4 py-3 text-center">
-            <p className="font-display text-sm font-extrabold text-navy-700">
-              You have {matchLen} matching digits on your number — your prize is {tier.prize}.
+          <div className="overflow-hidden rounded-card bg-grad-navy-card px-4 py-4 text-center shadow-card">
+            <p className="font-display text-xs font-extrabold uppercase tracking-wide text-gold-500">
+              🎉 You matched today
             </p>
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
+              {yNumber.slice(yNumber.length - matchLen).map((d, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ scale: 0, y: 8 }}
+                  animate={{ scale: 1, y: 0 }}
+                  transition={{ delay: 0.06 * i, type: "spring", stiffness: 440, damping: 14 }}
+                  className="grid h-9 w-7 place-items-center rounded-[10px] bg-gold-500 font-display text-lg font-extrabold text-navy-900 shadow ring-2 ring-white/40 sm:h-11 sm:w-9 sm:text-2xl"
+                >
+                  {d}
+                </motion.span>
+              ))}
+            </div>
+            <p className="mt-2.5 font-display text-sm font-bold text-white">
+              {matchLen} matching {matchLen === 1 ? "digit" : "digits"} on your number
+            </p>
+            <div className="mx-auto mt-3 inline-flex flex-col items-center gap-1 rounded-card bg-white/10 px-5 py-2.5">
+              <span className="font-display text-[10px] font-extrabold uppercase tracking-wider text-white/70">
+                Your prize
+              </span>
+              <span className="rounded-pill bg-brand-red px-4 py-1 font-display text-lg font-extrabold text-white shadow-sm">
+                {tier.prize}
+              </span>
+            </div>
           </div>
         ) : (
           <div className="rounded-card bg-white px-4 py-4 text-center shadow-soft">
@@ -136,17 +160,6 @@ export default function HomePage() {
             </Button>
           </div>
         )}
-
-        <div className="rounded-card bg-white p-4 text-center shadow-soft">
-          <p className="font-body font-bold text-navy-700">
-            Dial <span className="text-brand-red">*647#</span> to Play &amp; Win Airtime &amp; More!
-          </p>
-          <Link href="/info">
-            <Button variant="red" size="md" className="mt-3 w-full">
-              How it Works
-            </Button>
-          </Link>
-        </div>
 
         <HeroPromoCard />
         <FreeGamesCarousel />

@@ -48,14 +48,14 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
                 onClose();
                 openGame();
               }}
-              className="mt-5 flex w-full items-center gap-3 overflow-hidden rounded-card bg-grad-navy-card p-3.5 text-left shadow-soft"
+              className="mt-5 flex w-full items-center gap-3 rounded-card bg-grad-navy-card px-3.5 py-3.5 text-left shadow-soft"
             >
-              <span className="min-w-0 flex-1">
+              <span className="flex min-w-0 flex-1 flex-col gap-2">
                 <span className="flex items-center gap-2">
-                  <PickACardLogo tone="dark" className="w-32" />
-                  <span className="shrink-0 rounded-pill bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-navy-900">Promo</span>
+                  <PickACardLogo tone="dark" className="w-28 shrink-0" />
+                  <span className="shrink-0 rounded-pill bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase leading-none text-navy-900">Promo</span>
                 </span>
-                <span className="mt-1.5 block truncate text-xs font-semibold text-white/85">Airtime, Data &amp; More!</span>
+                <span className="block truncate text-xs font-semibold leading-snug text-white/85">Airtime, Data &amp; More!</span>
               </span>
               <ChevronRight className="h-5 w-5 shrink-0 text-white" />
             </button>

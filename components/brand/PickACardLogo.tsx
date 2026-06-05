@@ -34,7 +34,7 @@ export function PickACardLogo({
   return (
     <svg
       viewBox="0 0 360 132"
-      className={cn("block h-auto w-44 select-none", className)}
+      className={cn("inline-block h-auto max-w-full select-none align-middle", className)}
       fill="none"
       role="img"
       aria-label={title}
