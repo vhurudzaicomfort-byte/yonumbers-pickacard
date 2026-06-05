@@ -18,7 +18,7 @@ export function HeroPromoCard() {
       <span aria-hidden className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full border-[16px] border-white/5" />
       <span aria-hidden className="pointer-events-none absolute -right-2 top-6 h-24 w-24 rounded-full border-[10px] border-white/5" />
       <div className="relative flex items-start gap-3">
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-gold-500 text-navy-900">
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-white text-navy-700 shadow-sm">
           <CardsIcon className="h-6 w-6" />
         </span>
         <div className="min-w-0">

@@ -49,13 +49,13 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
               }}
               className="mt-5 flex w-full items-center gap-3 overflow-hidden rounded-card bg-grad-navy-card p-3 text-left shadow-soft"
             >
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-amber-500 text-navy-900">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-white text-navy-700 shadow-sm">
                 <CardsIcon className="h-6 w-6" />
               </span>
               <span className="min-w-0 flex-1">
                 <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
                   <span className="font-display text-sm font-extrabold leading-tight text-white">Pick a Card &amp; Win</span>
-                  <span className="shrink-0 rounded-pill bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-navy-900">New</span>
+                  <span className="shrink-0 rounded-pill bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-navy-900">Promo</span>
                 </span>
                 <span className="mt-0.5 block truncate text-xs font-semibold text-white/85">Airtime, Data &amp; More!</span>
               </span>

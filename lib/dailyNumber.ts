@@ -54,6 +54,23 @@ export function winnersFor(isoDate: string): number {
   return 600 + (seedFrom(isoDate + "w") % 900);
 }
 
+// DEMO: rotate the user's match result on each load so reviewers can see every
+// state (no match → partial tiers → Grand Win). Set to false to disable.
+export const DEMO_ROTATE_MATCH = true;
+const DEMO_MATCH_LENS = [0, 2, 4, 6, 8];
+
+/** Advance and return the next demo match length (cycles, persisted per device). */
+export function nextDemoMatchLen(): number {
+  try {
+    const k = "yonumbers.demo.matchIdx";
+    const i = (parseInt(localStorage.getItem(k) ?? "-1", 10) + 1) % DEMO_MATCH_LENS.length;
+    localStorage.setItem(k, String(i));
+    return DEMO_MATCH_LENS[i];
+  } catch {
+    return 0;
+  }
+}
+
 /** Demo: the grand winner of a day's draw — a masked number + full-match prize. */
 export function grandWinnerFor(isoDate: string): { masked: string; digits: number; prize: string } {
   const dn = dailyNumberFor(isoDate);

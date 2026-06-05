@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { PortalChrome } from "@/components/portal/PortalChrome";
@@ -10,7 +11,15 @@ import { Button } from "@/components/ui/Button";
 import { Coin } from "@/components/brand/Coin";
 import { usePickACard } from "@/components/pickacard/PickACardProvider";
 import { usePlayState } from "@/lib/pointsStore";
-import { dailyNumberFor, evaluateDailyMatch, winnersFor, grandWinnerFor } from "@/lib/dailyNumber";
+import {
+  dailyNumberFor,
+  evaluateDailyMatch,
+  winnersFor,
+  grandWinnerFor,
+  tierForMatch,
+  DEMO_ROTATE_MATCH,
+  nextDemoMatchLen,
+} from "@/lib/dailyNumber";
 
 function yesterdayIso(): string {
   const d = new Date();
@@ -27,7 +36,16 @@ export default function HomePage() {
   const yNumber = dailyNumberFor(yIso).split(""); // 8 digits
   const winners = winnersFor(yIso);
   const grand = grandWinnerFor(yIso);
-  const result = play.phone ? evaluateDailyMatch(play.phone, yIso) : null;
+
+  // DEMO: rotate the personalised result on each load (no-match → tiers → Grand
+  // Win) so reviewers see every state. Falls back to the real match otherwise.
+  const realMatch = play.phone ? evaluateDailyMatch(play.phone, yIso) : null;
+  const [demoLen, setDemoLen] = useState<number | null>(null);
+  useEffect(() => {
+    if (DEMO_ROTATE_MATCH) setDemoLen(nextDemoMatchLen());
+  }, []);
+  const matchLen = DEMO_ROTATE_MATCH ? (demoLen ?? 0) : realMatch?.matchLen ?? 0;
+  const tier = tierForMatch(matchLen);
 
   return (
     <PortalChrome title="Home">
@@ -67,10 +85,14 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* 2) Number of winners */}
-        <div className="rounded-card bg-white px-4 py-3 text-center shadow-soft">
-          <span className="font-display text-2xl font-extrabold text-navy-700">{winners.toLocaleString()}</span>{" "}
-          <span className="text-sm font-bold uppercase tracking-wide text-slate-600">winners yesterday</span>
+        {/* 2) Number of winners — number is the hero, label the caption */}
+        <div className="flex flex-col items-center gap-1 rounded-card bg-white px-4 py-5 text-center shadow-soft">
+          <span className="font-display text-4xl font-extrabold leading-none text-navy-700 sm:text-5xl">
+            {winners.toLocaleString()}
+          </span>
+          <span className="font-body text-sm font-medium tracking-wide text-slate-400">
+            Winners Yesterday
+          </span>
         </div>
 
         {/* 3) Grand winner — prize is the dominant element */}
@@ -89,17 +111,20 @@ export default function HomePage() {
           </span>
         </div>
 
-        {/* 4) The user's personalised result */}
-        {result && result.tier ? (
+        {/* 4) The user's personalised result (demo-rotated) */}
+        {tier ? (
           <div className="rounded-card bg-amber-500/15 px-4 py-3 text-center">
             <p className="font-display text-sm font-extrabold text-navy-700">
-              You have {result.matchLen} matching digits on your number — your prize is {result.tier.prize}.
+              You have {matchLen} matching digits on your number — your prize is {tier.prize}.
             </p>
           </div>
         ) : (
           <div className="rounded-card bg-white px-4 py-4 text-center shadow-soft">
-            <p className="font-display text-sm font-bold text-navy-700">
-              Oops, no matching numbers today — try Pick a Card &amp; Win!
+            <p className="font-display text-base font-extrabold text-brand-red">
+              Oops, no matching numbers today.
+            </p>
+            <p className="font-display text-base font-extrabold text-navy-700">
+              Try Pick a Card &amp; Win!
             </p>
             <Button
               variant="red"
@@ -125,6 +150,21 @@ export default function HomePage() {
 
         <HeroPromoCard />
         <FreeGamesCarousel />
+
+        {/* Leaderboard nudge */}
+        <section className="flex flex-col gap-1">
+          <h2 className="font-display text-lg font-extrabold text-navy-700">Leaderboard</h2>
+          <div className="flex items-center gap-3 rounded-card bg-grad-navy-card p-4 shadow-card">
+            <span className="min-w-0 flex-1 font-display text-sm font-extrabold leading-snug text-white">
+              See who&rsquo;s topping today&rsquo;s leaderboard — can you climb?
+            </span>
+            <Link href="/leaderboard" className="shrink-0">
+              <Button variant="red" size="sm" className="whitespace-nowrap">
+                View
+              </Button>
+            </Link>
+          </div>
+        </section>
       </div>
     </PortalChrome>
   );
