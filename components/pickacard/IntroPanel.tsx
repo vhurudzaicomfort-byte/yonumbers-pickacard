@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Lockup } from "@/components/brand/Lockup";
+import { PickACardLogo } from "@/components/brand/PickACardLogo";
 import { Star } from "@/components/ui/Star";
 import { Button } from "@/components/ui/Button";
 
@@ -32,7 +32,7 @@ export function IntroPanel({ onPlay, onDismiss }: { onPlay: () => void; onDismis
         ))}
       </div>
 
-      <Lockup tone="light" className="text-xl" priority />
+      <PickACardLogo tone="light" className="w-60" />
 
       <h2 className="font-display text-2xl font-extrabold leading-tight text-navy-700">
         Congratulations!

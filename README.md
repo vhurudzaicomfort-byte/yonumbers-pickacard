@@ -23,7 +23,7 @@ gamified mini-game, and returns them exactly where they were.
 
 - **Two coordinated themes** — a clean **Core** portal (navy + red, Nunito) and a
   vibrant **PickaCard** game world (purple gradient, candy buttons, gold chests,
-  magenta lockup, Baloo 2).
+  the official “Pick a Card & Win” lockup, Baloo 2).
 - **Pick a Card as a pop-up overlay** — launched from three entry points (sidebar
   menu, Home promo card, floating chest launcher), all via a single
   `usePickACard()` controller. The host page stays mounted; the URL updates to
@@ -58,7 +58,7 @@ gamified mini-game, and returns them exactly where they were.
 ```
 app/            routes: / (splash) · /home · /games · /leaderboard · /info
 components/
-  brand/        Logo, Lockup, Coin, EconetFooter (extracted assets)
+  brand/        Logo, PickACardLogo, Coin, EconetFooter (extracted assets)
   ui/           Button (candy + flat), PillToggle, PhoneInput, PackageSelector, OtpInput
   game/         TreasureCard, RewardPanel, GameTopBar, ActionBar, DailyPoints
   pickacard/    PickACardProvider (controller) · PickACardModal · Panels

@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Logo } from "@/components/brand/Logo";
+import { PickACardLogo } from "@/components/brand/PickACardLogo";
 import { usePickACard } from "@/components/pickacard/PickACardProvider";
 import { usePlayState } from "@/lib/pointsStore";
-import { CloseIcon, ChevronRight, CardsIcon, UserIcon } from "./icons";
+import { CloseIcon, ChevronRight, UserIcon } from "./icons";
 
 const CATEGORIES = ["Action", "Adventure", "Arcade", "Strategy", "Intellectual", "Sport"];
 
@@ -47,17 +48,14 @@ export function SidebarMenu({ open, onClose }: { open: boolean; onClose: () => v
                 onClose();
                 openGame();
               }}
-              className="mt-5 flex w-full items-center gap-3 overflow-hidden rounded-card bg-grad-navy-card p-3 text-left shadow-soft"
+              className="mt-5 flex w-full items-center gap-3 overflow-hidden rounded-card bg-grad-navy-card p-3.5 text-left shadow-soft"
             >
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] bg-white text-navy-700 shadow-sm">
-                <CardsIcon className="h-6 w-6" />
-              </span>
               <span className="min-w-0 flex-1">
-                <span className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                  <span className="font-display text-sm font-extrabold leading-tight text-white">Pick a Card &amp; Win</span>
+                <span className="flex items-center gap-2">
+                  <PickACardLogo tone="dark" className="w-32" />
                   <span className="shrink-0 rounded-pill bg-amber-500 px-2 py-0.5 text-[10px] font-extrabold uppercase text-navy-900">Promo</span>
                 </span>
-                <span className="mt-0.5 block truncate text-xs font-semibold text-white/85">Airtime, Data &amp; More!</span>
+                <span className="mt-1.5 block truncate text-xs font-semibold text-white/85">Airtime, Data &amp; More!</span>
               </span>
               <ChevronRight className="h-5 w-5 shrink-0 text-white" />
             </button>
